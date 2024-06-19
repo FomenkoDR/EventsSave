@@ -27,8 +27,11 @@ def get_files():
 
     #4
 
-    UserName = os.getenv('UserNameVSK')
-    Password = os.getenv('PasswordVSK')
+    #UserName = os.getenv('UserNameVSK')
+    #Password = os.getenv('PasswordVSK')
+
+    UserName = 'DFomenko@vsk.ru'
+    Password = '22119912051847fdR'
 
     res_3 = s.post('{}{}'.format('https://adfs.vsk.ru/adfs/ls/',client_request_id) , data={'UserName': UserName ,'Password': Password,'AuthMethod': 'FormsAuthentication'})
 

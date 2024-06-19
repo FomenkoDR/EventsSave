@@ -3,7 +3,7 @@ name: Daily Save
 on: [push]
 
 env:
-    UserNameVSK: ${{ secrets.USERNAMEVSK}}
+    UserNameVSK: '${{ secrets.USERNAMEVSK}}'
     PasswordVSK: ${{ secrets.PASSWORDVSK}}
 
 jobs:
