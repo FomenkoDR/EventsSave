@@ -2,6 +2,10 @@ name: Daily Save
 
 on: [push]
 
+env:
+    UserNameVSK: ${{ secrets.USERNAMEVSK}}
+    PasswordVSK: ${{ secrets.PASSWORDVSK}}
+
 jobs:
     Daily-Save:
         runs-on: ubuntu-latest
