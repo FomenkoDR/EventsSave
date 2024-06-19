@@ -13,29 +13,29 @@ def get_files():
     s = Session() 
 
     #1
-    s.get('https://authd.vsk.ru/auth/realms/users_auth/protocol/openid-connect/auth?client_id=prod-keycloak_users_auth_dmzwebtutor_elearning-1&redirect_uri=https%3A%2F%2Fe-learning.vsk.ru%2Fview_doc.html%3Fmode=default&response_type=code')
+    s.get('https://authd.vsk.ru/auth/realms/users_auth/protocol/openid-connect/auth?client_id=prod-keycloak_users_auth_dmzwebtutor_elearning-1&redirect_uri=https%3A%2F%2Fe-learning.vsk.ru%2Fview_doc.html%3Fmode=default&response_type=code', timeout=5)
 
     #2
-    res_1 = s.get('https://authd.vsk.ru/auth/realms/users_auth/protocol/openid-connect/auth?client_id=prod-keycloak_users_auth_dmzwebtutor_elearning-1&redirect_uri=https%3A%2F%2Fe-learning.vsk.ru%2Fview_doc.html%3Fmode=default&response_type=code')
+    res_1 = s.get('https://authd.vsk.ru/auth/realms/users_auth/protocol/openid-connect/auth?client_id=prod-keycloak_users_auth_dmzwebtutor_elearning-1&redirect_uri=https%3A%2F%2Fe-learning.vsk.ru%2Fview_doc.html%3Fmode=default&response_type=code', timeout=5)
 
     SAMLRequest = BeautifulSoup(res_1.text, 'lxml').find('div', class_='card-pf').find_all('input')[0].get('value')
     RelayState = BeautifulSoup(res_1.text, 'lxml').find('div', class_='card-pf').find_all('input')[1].get('value')
 
     #3
-    res_2 = s.post('https://adfs.vsk.ru/adfs/ls/', data = {'SAMLRequest': SAMLRequest,'RelayState': RelayState} )
+    res_2 = s.post('https://adfs.vsk.ru/adfs/ls/', data = {'SAMLRequest': SAMLRequest,'RelayState': RelayState}, timeout=5)
 
     client_request_id = BeautifulSoup(res_2.text, 'lxml').find('div', class_="groupMargin").find('form').get('action')
 
     #4
 
-    res_3 = s.post('{}{}'.format('https://adfs.vsk.ru/adfs/ls/',client_request_id) , data={'UserName': 'DFomenko@vsk.ru' ,'Password': '22119912051847fdR','AuthMethod': 'FormsAuthentication'})
+    res_3 = s.post('{}{}'.format('https://adfs.vsk.ru/adfs/ls/',client_request_id) , data={'UserName': 'DFomenko@vsk.ru' ,'Password': '22119912051847fdR','AuthMethod': 'FormsAuthentication'}, timeout=5)
 
 
     SAMLResponse = BeautifulSoup(res_3.text, 'lxml').find_all('input')[0].get('value')
     RelayState_2 = BeautifulSoup(res_3.text, 'lxml').find_all('input')[1].get('value')
 
     #5
-    res_4 = s.post('https://authd.vsk.ru/auth/realms/users_auth/broker/adfs/endpoint', data={'SAMLResponse': SAMLResponse,'RelayState': RelayState_2}, allow_redirects=False)
+    res_4 = s.post('https://authd.vsk.ru/auth/realms/users_auth/broker/adfs/endpoint', data={'SAMLResponse': SAMLResponse,'RelayState': RelayState_2}, allow_redirects=False, timeout=5)
 
     url_5 = res_4.headers['location']
 
