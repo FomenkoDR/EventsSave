@@ -11,4 +11,4 @@ jobs:
             - name: Install Dependencies
               run: pip install -r requirements.txt
             - name: Run Save
-              run: python app.py
+              run: python events.py
