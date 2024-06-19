@@ -13,7 +13,7 @@ def get_files():
     s = Session() 
 
     #1
-    s.get('https://authd.vsk.ru/auth/realms/users_auth/protocol/openid-connect/auth?client_id=prod-keycloak_users_auth_dmzwebtutor_elearning-1&redirect_uri=https%3A%2F%2Fe-learning.vsk.ru%2Fview_doc.html%3Fmode=default&response_type=code', timeout=None)
+    #s.get('https://authd.vsk.ru/auth/realms/users_auth/protocol/openid-connect/auth?client_id=prod-keycloak_users_auth_dmzwebtutor_elearning-1&redirect_uri=https%3A%2F%2Fe-learning.vsk.ru%2Fview_doc.html%3Fmode=default&response_type=code', timeout=None)
 
     #2
     res_1 = s.get('https://authd.vsk.ru/auth/realms/users_auth/protocol/openid-connect/auth?client_id=prod-keycloak_users_auth_dmzwebtutor_elearning-1&redirect_uri=https%3A%2F%2Fe-learning.vsk.ru%2Fview_doc.html%3Fmode=default&response_type=code', timeout=None)
