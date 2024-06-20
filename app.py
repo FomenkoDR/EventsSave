@@ -2,22 +2,9 @@ import pandas as pd
 from requests import Session
 from bs4 import BeautifulSoup
 import time
-import os
-from dotenv import load_dotenv
-from requests.adapters import HTTPAdapter, Retry
 
-load_dotenv()
-
-
-
-
-def get_files():
-
-    
+def get_files():  
     s = Session() 
-
-    retries = Retry(connect=5, backoff_factor=1,)
-    s.mount('http://', HTTPAdapter(max_retries=retries))
 
     headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0'}
 
@@ -28,12 +15,13 @@ def get_files():
     RelayState = BeautifulSoup(res_1.text, 'lxml').find('div', class_='card-pf').find_all('input')[1].get('value')
 
     #3
+    time.sleep(30)
     res_2 = s.post('https://adfs.vsk.ru/adfs/ls/', data = {'SAMLRequest': SAMLRequest,'RelayState': RelayState}, headers = headers)
 
     client_request_id = BeautifulSoup(res_2.text, 'lxml').find('div', class_="groupMargin").find('form').get('action')
 
     #4
-
+    time.sleep(15)
     res_3 = s.post('{}{}'.format('https://adfs.vsk.ru/adfs/ls/',client_request_id) , data={'UserName': 'DFomenko@vsk.ru' ,'Password': '22119912051847fdR','AuthMethod': 'FormsAuthentication'}, headers = headers)
 
 
@@ -41,16 +29,18 @@ def get_files():
     RelayState_2 = BeautifulSoup(res_3.text, 'lxml').find_all('input')[1].get('value')
 
     #5
+    #time.sleep(0.2)    
     res_4 = s.post('https://authd.vsk.ru/auth/realms/users_auth/broker/adfs/endpoint', data={'SAMLResponse': SAMLResponse,'RelayState': RelayState_2}, allow_redirects=False, headers = headers)
 
     url_5 = res_4.headers['location']
 
     #6
+    #time.sleep(30)    
     res_5 = s.get(url_5, allow_redirects=False, headers = headers)
 
     #7
     l = len(url_5) + 1 
-
+    #time.sleep(30)
     s.get(("{}{}".format('https://e-learning.vsk.ru:444/view_doc.html?mode', url_5[l//5:])), headers = headers) #url_5[l//5:] = default&session_state=(...)&code=(...)
 
     #8
@@ -61,7 +51,7 @@ def get_files():
 
     #10
     start_date = '20.05.2024'
-    finish_date = '23.05.2024'
+    finish_date = '21.05.2024'
 
     payload = {  
     "collection_code" : "CUSTOM_REPORT_DATA",
