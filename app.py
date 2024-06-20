@@ -20,8 +20,6 @@ def get_files():
     s.mount('http://', HTTPAdapter(max_retries=retries))
 
     headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0'}
-    #1
-    #s.get('https://authd.vsk.ru/auth/realms/users_auth/protocol/openid-connect/auth?client_id=prod-keycloak_users_auth_dmzwebtutor_elearning-1&redirect_uri=https%3A%2F%2Fe-learning.vsk.ru%2Fview_doc.html%3Fmode=default&response_type=code', timeout=None)
 
     #2
     res_1 = s.get('https://authd.vsk.ru/auth/realms/users_auth/protocol/openid-connect/auth?client_id=prod-keycloak_users_auth_dmzwebtutor_elearning-1&redirect_uri=https%3A%2F%2Fe-learning.vsk.ru%2Fview_doc.html%3Fmode=default&response_type=code', headers = headers)
